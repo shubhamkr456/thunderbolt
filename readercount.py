@@ -1,8 +1,9 @@
 f= open("sss.txt","r+")
 x_previous=0
-t_previous=0
+t_previous=[]
+t_count=0
 def time(v):
-    return (int(v[0])+int(v[1]))
+    return (int(v[0])*60+int(v[1]))
 
 for aline in f:
     v=aline.split()
@@ -13,9 +14,15 @@ for aline in f:
         if(x_previous==0):
             pass
         else:
+            if(t[0]> t_previous[0]):
+                t_count=time(t)-time(t_previous)
+            else:
+                t_count= (24+int(t[0]))*60+int(t[1])- time(t_previous)
+                
             
-            print("Data was missed between %d & %d and the time elapsed between them was % minutes", x_previous, t_previous, t_previous)
+            print("Data was missed between {} & {} and the time elapsed between them was {} minutes".format( x_previous, x, t_count))
        
     x_previous=x
+    t_previous=t
 
 f.close()
